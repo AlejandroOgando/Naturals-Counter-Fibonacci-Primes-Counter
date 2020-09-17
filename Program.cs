@@ -5,6 +5,47 @@ namespace pruebas_fibo
 {
     class Program
     {
+        static IEnumerable<int> NaturalNum(int cant)
+        {
+            for (int i = 0; i <= cant; i++)
+            {
+                yield return i;
+            }
+        }
+
+        static Func<int> Fibonacci()
+        {
+            int a = 0, b = 1;
+
+            return delegate ()
+            {
+                int c = a, d = b;
+                b += a;
+                a = d;
+                return c;
+            };
+        }
+
+        static IEnumerable<int> PrimeNum(int num)
+        {
+            List<int> primeList = new List<int>();
+            for (int i = 2; i <= num; i++)
+            {
+                primeList.Add(i);
+            }
+
+            for (int i = 0; i < primeList.Count; i++)
+            {
+                for (int j = 0; j < primeList.Count; j++)
+                {
+                    if (primeList[i] != primeList[j] && primeList[j] % primeList[i] == 0) primeList.RemoveAt(j);
+
+                }
+            }
+
+            foreach (var j in primeList) yield return j;
+        }
+
         static void Main(string[] args)
         {
             while (true)
@@ -50,46 +91,6 @@ namespace pruebas_fibo
                         Console.WriteLine("Entrada no válida.");
                         break;
                 }
-            }
-        }
-
-        static Func<int> Fibonacci()
-        {
-            int a = 0, b = 1;
-
-            return delegate ()
-            {
-                int c = a, d = b;
-                b += a;
-                a = d;
-                return c;
-            };
-        }
-        static IEnumerable<int> PrimeNum(int num)
-        {
-            List<int> primeList = new List<int>();
-            for (int i = 2; i <= num; i++)
-            {
-                primeList.Add(i);
-            }
-
-            for (int i = 0; i < primeList.Count; i++)
-            {
-                for (int j = 0; j < primeList.Count; j++)
-                {
-                    if (primeList[i] != primeList[j] && primeList[j] % primeList[i] == 0) primeList.RemoveAt(j);
-
-                }
-            }
-
-            foreach (var j in primeList) yield return j;
-        }
-
-        static IEnumerable<int> NaturalNum(int cant)
-        {
-            for (int i = 0; i <= cant; i++)
-            {
-                yield return i;
             }
         }
     }
